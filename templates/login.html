@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .login-container {
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 28px;
+            color: #1877f2; /* Facebook blue */
+            margin-bottom: 20px;
+        }
+        
+        input[type="email"],
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #1877f2; /* Facebook blue */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #145996; /* Darker shade of Facebook blue */
+        }
+        
+        .signup-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #1877f2; /* Facebook blue */
+            text-decoration: none;
+        }
+        
+        .signup-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login to ChatMate</h1>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Email">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit" value="Login">
+        </form>
+        <a href="/registerPage" class="signup-link">Create New Account</a>
+    </div>
+</body>
+</html>

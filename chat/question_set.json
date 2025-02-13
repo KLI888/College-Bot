@@ -1,0 +1,50 @@
+[
+    {
+      "question": [
+        "what is the exam schedule",
+        "exam schedule",
+        "show me the exam schedule",
+        "can I get the exam schedule"
+      ],
+      "answer": "The exam schedule is available as a PDF.",
+      "pdf": "files/exam_schedule.pdf"
+    },
+    {
+      "question": [
+        "what is the daily timetable",
+        "daily timetable",
+        "class schedule",
+        "show me the class timetable"
+      ],
+      "answer": "The daily timetable is available as a PDF.",
+      "pdf": "files/daily_timetable.pdf"
+    },
+    {
+      "question": [
+        "what is the location of the college",
+        "college location",
+        "where is the college located",
+        "college address"
+      ],
+      "answer": "KCE College of Engineering is located in Jalgaon, Maharashtra."
+    },
+    {
+      "question": [
+        "how can I contact the college",
+        "college contact details",
+        "college phone number",
+        "college email"
+      ],
+      "answer": "You can contact KCE College of Engineering at +91-1234567890 or email at info@kcejalgaon.ac.in."
+    },
+    {
+      "question": [
+        "what courses are available",
+        "list of courses",
+        "available courses"
+      ],
+      "answer": "KCE College of Engineering offers courses in Computer Science, Mechanical Engineering, Civil Engineering, Electrical Engineering, and Electronics & Telecommunication."
+    }
+  ]
+  
+
