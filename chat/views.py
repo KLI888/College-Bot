@@ -8,7 +8,7 @@ import requests
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib import messages
-
+openai.api_key = "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"
 
 
 
