@@ -8,82 +8,13 @@ import requests
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib import messages
-openai.api_key = "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"
 
 
 
-# def google_search(query, api_key, cx):
-#     url = f"https://www.googleapis.com/customsearch/v1?q={query}&key={api_key}&cx={cx}"
-#     try:
-#         response = requests.get(url)
-#         response.raise_for_status()  # Raises an exception for 4xx or 5xx status codes
-#         search_results = response.json()
-#         if search_results:
-#             items = search_results.get('items', [])
-#             snippets = [item.get('snippet', '') for item in items]
-#             return snippets
-#         else:
-#             return None
-#     except requests.exceptions.RequestException as e:
-#         print("Error:", e)
-#         return None
 
 
-# def chat_view(request):
-#     if request.method == 'POST':
-#         user_input = request.POST.get('user_input')
 
-#         if user_input:
-
-#             api_key = 'AIzaSyCQNkYOhvCN9QCEs58V7wJAgK1fyp9-jjA'
-#             cx = 'f71d379b602f542e3'
-
-#             snippets = google_search(user_input, api_key, cx)
-#             if snippets:
-#                 for snippet in snippets:
-#                     print(snippet)
-#                     history = History.objects.create(user_input=user_input, api_output=snippet)
-#                     return render(request, 'chat.html', {'user_input': user_input, 'bot_response': snippet})
-#         else:
-#             # Call the ChatGPT API
-#             completion = openai.ChatCompletion.create(
-#                 model="gpt-3.5-turbo",
-#                 messages=[
-#                     {"role": "user", "content": user_input}
-#                 ]
-#             )
-
-#             # Check if completion has choices
-#             if completion.choices:
-#                 bot_response = completion.choices[0].message['content']
-#                 print(bot_response)
-#                 history = History.objects.create(user_input=user_input, api_output=bot_response)
-#                 return render(request, 'chat.html', {'user_input': user_input, 'bot_response': bot_response})
-#             else:
-#                 return render(request, 'chat.html', {'user_input': user_input, 'bot_response': "Failed to generate a response!"})
-            
-
-
-        
-            
-#     else:
-#         return render(request, 'chat.html')
-#     return render(request, 'chat.html')
-
-import json
-import os
-from django.shortcuts import render
-from .models import History
-import openai
-import requests
-
-import json
-import os
-from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
-from .models import History
-import openai
-import requests
 
 # Helper function to load the JSON dataset
 def load_question_set():
@@ -159,8 +90,8 @@ def chat_view(request):
                 })
 
             # Step 4: Use Google Search if no dataset answer
-            api_key = 'AIzaSyCQNkYOhvCN9QCEs58V7wJAgK1fyp9-jjA'
-            cx = 'f71d379b602f542e3'
+            # api_key = 'AIzaSyCQNkYOhvCN9QCEs58V7wJAgK1fyp9-jjA'
+            # cx = 'f71d379b602f542e3'
             snippets = google_search(user_input, api_key, cx)
             if snippets:
                 snippet = snippets[0]  # Take the first snippet as the response
