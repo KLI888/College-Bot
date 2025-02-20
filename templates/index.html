@@ -1,100 +1,165 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <title>Chat App</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <link rel="stylesheet" type="text/css" href="/static/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/lib/languages/python.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - ChatMate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/a11y-dark.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            position: relative;
+            height: 100vh;
+        }
+
+        .iframe-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .bot-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #10a37f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .bot-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .bot-icon {
+            color: white;
+            font-size: 24px;
+        }
+
+        .bot-tooltip {
+            position: absolute;
+            right: 75px;
+            background-color: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .bot-button:hover .bot-tooltip {
+            opacity: 1;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .bot-button {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .bot-icon {
+                font-size: 20px;
+            }
+
+            .bot-tooltip {
+                display: none;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #10a37f;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-overlay.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+    </style>
 </head>
-
 <body>
-  <div class="container mt-5">
-    <h1 style="color:white">Chat Bot</h1>
-    <div class="chat-box mt-3">
-      <!-- Chat messages will be added here dynamically -->
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="spinner"></div>
     </div>
-    <form id="chat-form">
-      {% csrf_token %}
-      <div class="form-group mt-3">
-        <textarea class="form-control" type="text" name="user_input" id="user_input" rows="3"
-          placeholder="Type your message here"></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary" id="send-btn">Send</button>
-    </form>
-  </div>
 
+    <!-- Iframe Container -->
+    <div class="iframe-container">
+        <iframe src="https://coem.ac.in/" title="College Website"></iframe>
+    </div>
 
-  <script>
-    setInterval(highlightAll, 1000);
+    <!-- Bot Button -->
+    <a href="/chat_view" class="bot-button">
+        <i class="fas fa-robot bot-icon"></i>
+        <span class="bot-tooltip">Chat with AI Assistant</span>
+    </a>
 
-    function highlightAll() {
-      document.querySelectorAll("pre code").forEach(block => {
-        hljs.highlightBlock(block);
-      });
-    }
-    const chatBox = document.querySelector(".chat-box");
-    const messageInput = document.querySelector("#user_input");
-    const sendBtn = document.querySelector("#send-btn");
-    const chatForm = document.querySelector("#chat-form");
+    <script>
+        // Handle iframe loading
+        window.onload = function() {
+            setTimeout(() => {
+                document.querySelector('.loading-overlay').classList.add('fade-out');
+            }, 1000);
+        };
 
-    function addMessage(message, isUserMessage) {
-        const messageDiv = document.createElement("div");
-        messageDiv.classList.add("mt-3", "p-3", "rounded");
-
-        if (isUserMessage) {
-            messageDiv.classList.add("user-message");
-        } else {
-            messageDiv.classList.add("bot-message");
-        }
-
-        messageDiv.innerHTML = `<img src="/static/images/user.png" class="user-icon"><p>${message}</p>`;
-        chatBox.appendChild(messageDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-
-    function sendMessage(event) {
-        event.preventDefault();
-        const message = messageInput.value.trim();
-
-        if (message !== "") {
-            addMessage(message, true);
-
-            // Code to send the message to the server and receive bot's response
-            fetch("/chat_view/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": document.querySelector("input[name='csrfmiddlewaretoken']").value
-                },
-                body: JSON.stringify({
-                    user_input: message
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                const botResponse = data.bot_response;
-                addMessage(botResponse, false);
-            })
-            .catch(error => console.error(error));
-
-            messageInput.value = "";
-        }
-    }
-
-    sendBtn.addEventListener("click", sendMessage);
-    chatForm.addEventListener("submit", sendMessage);
-  </script>
-
+        // Handle iframe errors
+        document.querySelector('iframe').onerror = function() {
+            console.error('Failed to load iframe content');
+        };
+    </script>
 </body>
-
 </html>

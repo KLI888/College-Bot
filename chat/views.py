@@ -9,13 +9,13 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib import messages
 openai.api_key = "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"
-
+import json
 
 
 
 
 from django.http import JsonResponse, HttpResponse
-
+import os
 # Helper function to load the JSON dataset
 def load_question_set():
     # Path to your JSON file (adjust based on your project structure)
@@ -56,6 +56,10 @@ def google_search(query, api_key, cx):
         return None
 
 # Main chat view
+
+def home(request):
+    return render(request, "index.html")
+
 def chat_view(request):
     if request.method == "POST":
         user_input = request.POST.get("user_input")
@@ -90,8 +94,8 @@ def chat_view(request):
                 })
 
             # Step 4: Use Google Search if no dataset answer
-            # api_key = 'AIzaSyCQNkYOhvCN9QCEs58V7wJAgK1fyp9-jjA'
-            # cx = 'f71d379b602f542e3'
+            api_key = 'AIzaSyCQNkYOhvCN9QCEs58V7wJAgK1fyp9-jjA'
+            cx = 'f71d379b602f542e3'
             snippets = google_search(user_input, api_key, cx)
             if snippets:
                 snippet = snippets[0]  # Take the first snippet as the response
