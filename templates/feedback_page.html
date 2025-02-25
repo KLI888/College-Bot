@@ -1,0 +1,538 @@
+{% extends 'base.html' %}
+
+{% block title %}Feedback - ChatMate{% endblock %}
+
+{% block extra_css %}
+<style>
+  :root {
+    --primary-color: #202123;
+    --secondary-color: #1e1f20;
+    --accent-color: #8e8ea0;
+    --text-primary: #fff;
+    --text-secondary: #c5c5d2;
+    --border-color: #3f3f46;
+    --navbar-height: 64px;
+    --content-width: 900px;
+  }
+
+  body {
+    background-color: #161618;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Fixed Navbar Styling */
+  .top-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--navbar-height);
+    background-color: rgba(32, 33, 35, 0.8);
+    backdrop-filter: blur(20px);
+    z-index: 1030;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+  }
+
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .navbar-brand {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-right: 32px;
+  }
+
+  .navbar-brand:hover {
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  .navbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+  }
+
+  .navbar-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .try-pro-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .try-pro-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    margin-top: var(--navbar-height);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 24px;
+  }
+
+  /* Feedback Container */
+  .feedback-container {
+    max-width: var(--content-width);
+    width: 100%;
+    padding: 0 24px;
+  }
+
+  .page-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 32px;
+    text-align: center;
+    background: linear-gradient(90deg, #4686F4, #EA4335, #FBBC05);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Feedback Form */
+  .feedback-form {
+    background-color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .form-control {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    padding: 12px 16px;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .form-control:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: var(--accent-color);
+  }
+
+  select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%238e8ea0' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+
+  textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  /* Rating Stars */
+  .rating-container {
+    margin-bottom: 24px;
+  }
+
+  .stars {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+
+  .stars input {
+    display: none;
+  }
+
+  .stars label {
+    cursor: pointer;
+    width: auto;
+    color: var(--border-color);
+    font-size: 30px;
+    padding: 5px;
+    transition: all 0.2s ease;
+  }
+
+  .stars label:hover,
+  .stars label:hover ~ label,
+  .stars input:checked ~ label {
+    color: #FBBC05;
+  }
+
+  /* Submit Button */
+  .submit-btn {
+    background: linear-gradient(90deg, #4686F4, #EA4335);
+    color: var(--text-primary);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Success Message */
+  .success-message {
+    display: none;
+    text-align: center;
+    padding: 24px;
+    background-color: rgba(70, 134, 244, 0.1);
+    border: 1px solid #4686F4;
+    color: var(--text-primary);
+    border-radius: 8px;
+    margin-top: 24px;
+  }
+
+  /* Testimonials Section */
+  .testimonials {
+    background-color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .testimonials h3 {
+    font-size: 20px;
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .testimonial-item {
+    padding: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .testimonial-item:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+
+  .testimonial-text {
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-color);
+  }
+
+  .testimonial-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  /* Alert Messages */
+  .alert {
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+  }
+
+  .alert-success {
+    background-color: rgba(70, 134, 244, 0.1);
+    border: 1px solid #4686F4;
+    color: var(--text-primary);
+  }
+
+  .alert-danger {
+    background-color: rgba(234, 67, 53, 0.1);
+    border: 1px solid #EA4335;
+    color: var(--text-primary);
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .navbar-center {
+      display: none;
+    }
+
+    .try-pro-btn span {
+      display: none;
+    }
+
+    .page-title {
+      font-size: 28px;
+    }
+
+    .main-content {
+      padding: 32px 16px;
+    }
+
+    .feedback-form,
+    .testimonials {
+      padding: 16px;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Fixed Top Navbar -->
+<nav class="top-navbar">
+  <div class="navbar-logo">
+    <a href="/" class="navbar-brand">
+      <i class="fas fa-robot"></i>
+      ChatMate
+    </a>
+  </div>
+  <div class="navbar-center">
+    Student Feedback
+  </div>
+  <div class="navbar-actions">
+    <a href="/historyPage" class="try-pro-btn">
+      <i class="fas fa-history"></i>
+      <span>History</span>
+    </a>
+    <a href="/feedbackPage" class="try-pro-btn">
+      <i class="fas fa-comment-alt"></i>
+      <span>Feedback</span>
+    </a>
+    {% if user.is_authenticated %}
+    <a href="/loginPage" class="try-pro-btn">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </a>
+    {% else %}
+    <a href="/loginPage" class="try-pro-btn">
+      <i class="fas fa-sign-in-alt"></i>
+      <span>Login</span>
+    </a>
+    {% endif %}
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="main-content">
+  <div class="feedback-container">
+    <h1 class="page-title">Share Your Feedback</h1>
+
+    <!-- Display messages if any -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <!-- Feedback Form -->
+    <div class="feedback-form">
+      <form id="feedbackForm" method="POST" action="{% url 'feedback_page' %}">
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Your name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Your email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="course">Course</label>
+          <select class="form-control" id="course" name="course" required>
+            <option value="" disabled selected>Select your course</option>
+            <option value="btech">B.Tech</option>
+            <option value="mtech">M.Tech</option>
+            <option value="bca">BCA</option>
+            <option value="mca">MCA</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="semester">Semester</label>
+          <select class="form-control" id="semester" name="semester" required>
+            <option value="" disabled selected>Select your semester</option>
+            <option value="1">1st Semester</option>
+            <option value="2">2nd Semester</option>
+            <option value="3">3rd Semester</option>
+            <option value="4">4th Semester</option>
+            <option value="5">5th Semester</option>
+            <option value="6">6th Semester</option>
+            <option value="7">7th Semester</option>
+            <option value="8">8th Semester</option>
+          </select>
+        </div>
+
+        <div class="rating-container">
+          <label>How would you rate ChatMate?</label>
+          <div class="stars">
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5" class="fas fa-star"></label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4" class="fas fa-star"></label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3" class="fas fa-star"></label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2" class="fas fa-star"></label>
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1" class="fas fa-star"></label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="feedback">Your Feedback</label>
+          <textarea class="form-control" id="feedback" name="feedback" placeholder="Please share your experience with our ChatMate assistant..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="improvements">Suggestions for Improvement</label>
+          <textarea class="form-control" id="improvements" name="improvements" placeholder="How can we make ChatMate better for your learning experience?"></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Feedback</button>
+      </form>
+
+      <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle" style="font-size: 48px; color: #4686F4; margin-bottom: 16px;"></i>
+        <h3 style="font-size: 24px; margin-bottom: 12px;">Thank you for your feedback!</h3>
+        <p>We appreciate your input and will use it to improve ChatMate for all students.</p>
+      </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonials">
+      <h3>What students are saying about ChatMate:</h3>
+      
+      {% if testimonials %}
+        {% for testimonial in testimonials %}
+          <div class="testimonial-item">
+            <div class="testimonial-text">"{{ testimonial.feedback|truncatechars:150 }}"</div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">{{ testimonial.name|first|upper }}</div>
+              {{ testimonial.name }}, {{ testimonial.get_course_display }}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="testimonial-item">
+          <div class="testimonial-text">"ChatMate helped me understand complex programming concepts when I was stuck with my assignment. The explanations were clear and easy to follow!"</div>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">P</div>
+            Priya, B.Tech (CSE)
+          </div>
+        </div>
+        
+        <div class="testimonial-item">
+          <div class="testimonial-text">"I use ChatMate to get quick answers about college events and assignment deadlines. It's so much faster than scrolling through emails or the college website."</div>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">R</div>
+            Rahul, MCA
+          </div>
+        </div>
+        
+        <div class="testimonial-item">
+          <div class="testimonial-text">"The best thing about ChatMate is that it's available 24/7. I can study late at night and still get help when I need it most."</div>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">A</div>
+            Ananya, B.Tech (ECE)
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Form submission handler with Ajax support
+  document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    
+    // AJAX Form Submission
+    fetch('{% url "feedback_page" %}', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert("Feedback Submited Successfully")
+        document.getElementById('feedbackForm').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+      } else {
+        alert('Error submitting form: ' + data.error);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  });
+
+  // Auto-resize textarea
+  const textareas = document.querySelectorAll('textarea');
+  textareas.forEach(textarea => {
+    textarea.addEventListener('input', function () {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
+    });
+  });
+</script>
+{% endblock %}

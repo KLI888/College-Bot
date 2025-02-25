@@ -7,6 +7,8 @@ urlpatterns = [
     path('loginPage/', loginPage, name="loginPage"),
     path('logoutPage/', logoutPage, name="logoutPage"),
     path('registerPage/', registerPage, name="registerPage"),
-    path('historyPage/', historyPage, name="historyPage")
+    path('historyPage/', historyPage, name="historyPage"),
+    path('feedbackPage/', FeedbackPageView.as_view(), name='feedback_page'),  # Make sure this name is 'feedback_page'
+    path('feedback/success/', FeedbackSuccessView.as_view(), name='feedback_success'),
 
 ]

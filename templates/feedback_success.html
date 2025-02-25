@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Feedback Submitted - ChatMate</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #202123;
+      --secondary-color: #1e1f20;
+      --accent-color: #8e8ea0;
+      --text-primary: #fff;
+      --text-secondary: #c5c5d2;
+      --border-color: #3f3f46;
+      --navbar-height: 64px;
+      --content-width: 900px;
+    }
+
+    body {
+      background-color: #161618;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-primary);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Fixed Navbar Styling */
+    .top-navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--navbar-height);
+      background-color: rgba(32, 33, 35, 0.8);
+      backdrop-filter: blur(20px);
+      z-index: 1030;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+    }
+
+    .navbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .navbar-brand {
+      color: var(--text-primary);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-right: 32px;
+    }
+
+    .navbar-brand:hover {
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .navbar-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      font-weight: 500;
+    }
+
+    .navbar-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .try-pro-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: var(--text-primary);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .try-pro-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-top: var(--navbar-height);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+
+    /* Success Container */
+    .success-container {
+      max-width: var(--content-width);
+      width: 100%;
+      text-align: center;
+    }
+
+    .success-card {
+      background-color: var(--primary-color);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 48px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .success-icon {
+      font-size: 72px;
+      color: #4686F4;
+      margin-bottom: 24px;
+    }
+
+    .success-title {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, #4686F4, #EA4335, #FBBC05);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .success-message {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    .success-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .success-btn {
+      background: linear-gradient(90deg, #4686F4, #EA4335);
+      color: var(--text-primary);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .success-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .success-btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+    }
+
+    .success-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .navbar-center {
+        display: none;
+      }
+
+      .try-pro-btn span {
+        display: none;
+      }
+
+      .success-title {
+        font-size: 28px;
+      }
+
+      .success-message {
+        font-size: 16px;
+      }
+
+      .success-card {
+        padding: 32px 16px;
+      }
+
+      .success-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .success-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Fixed Top Navbar -->
+  <nav class="top-navbar">
+    <div class="navbar-logo">
+      <a href="/" class="navbar-brand">
+        <i class="fas fa-robot"></i>
+        ChatMate
+      </a>
+    </div>
+    <div class="navbar-center">
+      Feedback Submitted
+    </div>
+    <div class="navbar-actions">
+      <a href="/historyPage" class="try-pro-btn">
+        <i class="fas fa-history"></i>
+        <span>History</span>
+      </a>
+      <a href="/feedbackPage" class="try-pro-btn">
+        <i class="fas fa-comment-alt"></i>
+        <span>Feedback</span>
+      </a>
+      <a href="/loginPage" class="try-pro-btn">
+        <i class="fas fa-sign-in-alt"></i>
+        <span>Login</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="success-container">
+      <div class="success-card animate-fade-in">
+        <i class="fas fa-check-circle success-icon"></i>
+        <h1 class="success-title">Thank You for Your Feedback!</h1>
+        <p class="success-message">We appreciate you taking the time to share your thoughts with us. Your feedback helps us improve ChatMate for everyone.</p>
+        <div class="success-buttons">
+          <a href="/" class="success-btn">
+            <i class="fas fa-robot"></i>
+            Try ChatMate
+          </a>
+          <a href="/feedbackPage" class="success-btn success-btn-secondary">
+            <i class="fas fa-arrow-left"></i>
+            Back to Feedback
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</body>
+
+</html>

@@ -57,6 +57,47 @@ def google_search(query, api_key, cx):
 
 # Main chat view
 
+from django.shortcuts import render, redirect
+from django.views import View
+from django.contrib import messages
+from .forms import FeedbackForm
+from .models import Feedback
+
+class FeedbackPageView(View):
+    template_name = 'feedback_page.html'
+    
+    def get(self, request):
+        form = FeedbackForm()
+        # Get the three most recent feedbacks with rating >= 4 for testimonials
+        testimonials = Feedback.objects.filter(rating__gte=4).order_by('-created_at')[:3]
+        
+        context = {
+            'form': form,
+            'testimonials': testimonials,
+        }
+        return render(request, self.template_name, context)
+    
+    def post(self, request):
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Thank you for your feedback!')
+            return redirect('feedback_success')
+        
+        # If form is invalid, return to the form with errors
+        context = {
+            'form': form,
+        }
+        return render(request, self.template_name, context)
+
+
+class FeedbackSuccessView(View):
+    template_name = 'feedback_success.html'
+    
+    def get(self, request):
+        return render(request, self.template_name)
+
+
 def home(request):
     return render(request, "index.html")
 
